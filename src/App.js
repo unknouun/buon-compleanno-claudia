@@ -79,7 +79,6 @@ function App() {
   };
 
   const handlePageChange = number => setCurrentPage(number);
-
   return (
     <AppContainer>
       <ReactPageScroller

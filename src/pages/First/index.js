@@ -3,6 +3,7 @@ import Confetti from "react-confetti";
 import styled from "styled-components";
 
 const FirstPage = styled.div`
+  font-family: 'PT Sans', sans-serif;
   height: 100%;
 `;
 
@@ -20,7 +21,7 @@ export default ({ children }) => {
       <Confetti
         width={width}
         height={height}
-        numberOfPieces={100}
+        numberOfPieces={500}
         recycle={false}
         onConfettiComplete={onConfettiComplete}
       />
