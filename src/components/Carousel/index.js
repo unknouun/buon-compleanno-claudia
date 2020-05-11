@@ -24,6 +24,7 @@ export default ({ data }) => {
 
   const onChange = value => setValue(value);
 
+
   return (
     <Container>
       {data ? (
@@ -32,12 +33,12 @@ export default ({ data }) => {
             slides={data}
             arrowLeft={
               <ArrowLeftIcon>
-                <Icon icon={faAngleLeft} size="6x" />
+                <Icon icon={faAngleLeft} size="3x" />
               </ArrowLeftIcon>
             }
             arrowRight={
               <ArrowRightIcon>
-                <Icon icon={faAngleRight} size="6x" />
+                <Icon icon={faAngleRight} size="3x" />
               </ArrowRightIcon>
             }
             onChange={onChange}

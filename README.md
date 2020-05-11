@@ -8,4 +8,5 @@
     - Amplify
     - Dynamo DB
     - S3
+    - Route 53
 

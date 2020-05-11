@@ -4,7 +4,7 @@ import { listVideos } from "./graphql/queries";
 import { useQuery } from "react-query";
 import ReactPageScroller from "react-page-scroller";
 import { VideoPlayer, Message } from "./components";
-import { FirstPage, SecondPage } from "./pages";
+import { FirstPage, SecondPage, ThirdPage } from "./pages";
 import { FontAwesomeIcon as Icon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
@@ -38,6 +38,13 @@ const VideoWrapper = styled.div`
   padding-bottom: 45px;
 `;
 
+const Copyright = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  text-align: center !important;
+`;
+
 const getVideos = async () => {
   const { data } = await API.graphql(graphqlOperation(listVideos));
   let { items } = data.listVideos;
@@ -45,7 +52,7 @@ const getVideos = async () => {
   return items;
 };
 
-const getVideoJsOptions = video => {
+const getVideoJsOptions = (video) => {
   return {
     autoplay: false,
     controls: true,
@@ -55,9 +62,9 @@ const getVideoJsOptions = video => {
     sources: [
       {
         src: video.url,
-        type: "video/mp4"
-      }
-    ]
+        type: "video/mp4",
+      },
+    ],
   };
 };
 
@@ -66,9 +73,9 @@ function App() {
 
   const [currentPage, setCurrentPage] = useState(null);
 
-  const getVideoSlides = videos => {
+  const getVideoSlides = (videos) => {
     let slides = [];
-    videos.map(video =>
+    videos.map((video) =>
       slides.push(
         <VideoWrapper>
           <VideoPlayer {...getVideoJsOptions(video)} />
@@ -78,7 +85,64 @@ function App() {
     return slides;
   };
 
-  const handlePageChange = number => setCurrentPage(number);
+  const handlePageChange = (number) => setCurrentPage(number);
+
+  const renderIcons = (page) => {
+    switch (page) {
+      case 0:
+        return (
+          <DownAngleIcon
+            value={currentPage}
+            onClick={(e) => handlePageChange(e.currentTarget.value++)}
+          >
+            <Icon icon={faAngleDown} size="4x" />
+          </DownAngleIcon>
+        );
+      case 1:
+        return (
+          <>
+            <UpAngleIcon
+              value={currentPage}
+              onClick={(e) => handlePageChange(e.currentTarget.value--)}
+            >
+              <Icon icon={faAngleUp} size="4x" />
+            </UpAngleIcon>
+            <DownAngleIcon
+              value={currentPage}
+              onClick={(e) => handlePageChange(e.currentTarget.value++)}
+            >
+              <Icon icon={faAngleDown} size="4x" />
+            </DownAngleIcon>
+          </>
+        );
+      case 2:
+        return (
+          <>
+            <UpAngleIcon
+              value={currentPage}
+              onClick={(e) => handlePageChange(e.currentTarget.value--)}
+            >
+              <Icon icon={faAngleUp} size="4x" />
+            </UpAngleIcon>
+            <Copyright>
+              &copy; by <a href="https://twitter.com/benprofit">Ruben Profit</a>
+            </Copyright>
+          </>
+        );
+      default:
+        return (
+          <DownAngleIcon
+            value={currentPage}
+            onClick={(e) => handlePageChange(e.currentTarget.value++)}
+          >
+            <Icon icon={faAngleDown} size="4x" />
+          </DownAngleIcon>
+        );
+    }
+  };
+
+  console.log("currentPage", currentPage);
+
   return (
     <AppContainer>
       <ReactPageScroller
@@ -94,26 +158,12 @@ function App() {
             data,
             error,
             isFetching,
-            getVideoSlides
+            getVideoSlides,
           }}
         />
+        <ThirdPage />
       </ReactPageScroller>
-      {!!currentPage && (
-        <UpAngleIcon
-          value={currentPage}
-          onClick={e => handlePageChange(e.currentTarget.value--)}
-        >
-          <Icon icon={faAngleUp} size="6x" />
-        </UpAngleIcon>
-      )}
-      {currentPage < 1 && (
-        <DownAngleIcon
-          value={currentPage}
-          onClick={e => handlePageChange(e.currentTarget.value++)}
-        >
-          <Icon icon={faAngleDown} size="6x" />
-        </DownAngleIcon>
-      )}
+      {renderIcons(currentPage)}
     </AppContainer>
   );
 }
