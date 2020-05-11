@@ -15,8 +15,11 @@ const AppContainer = styled.div``;
 const DownAngleIcon = styled.button`
   position: fixed;
   bottom: 0;
-  right: 50%;
   border: none;
+  right: 25%;
+  left: 50%;
+  margin-left: -150px;
+  width: 300px;
   background-color: transparent;
   &:hover {
     cursor: pointer;
@@ -26,7 +29,10 @@ const DownAngleIcon = styled.button`
 const UpAngleIcon = styled.button`
   position: fixed;
   top: 0;
-  right: 50%;
+  right: 25%;
+  left: 50%;
+  margin-left: -150px;
+  width: 300px;
   border: none;
   background-color: transparent;
   &:hover {
