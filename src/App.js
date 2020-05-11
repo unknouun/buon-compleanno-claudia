@@ -141,8 +141,6 @@ function App() {
     }
   };
 
-  console.log("currentPage", currentPage);
-
   return (
     <AppContainer>
       <ReactPageScroller
